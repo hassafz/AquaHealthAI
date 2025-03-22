@@ -72,7 +72,7 @@ export function ToolCard({ type, title, description, onSelect }: ToolCardProps) 
           className="w-full"
           onClick={() => onSelect(type)}
         >
-          Select Tool
+          {type === "algae" ? "Detect Algae" : "Fish Health Check"}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
