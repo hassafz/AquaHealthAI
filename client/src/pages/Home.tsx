@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { NavBar } from "@/components/NavBar";
-import { HeroSection } from "@/components/HeroSection";
 import { ToolCard } from "@/components/ToolCard";
 import { ToolInterface } from "@/components/ToolInterface";
-import { Features } from "@/components/Features";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -26,7 +24,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <NavBar />
-      <HeroSection />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.h2 
@@ -61,9 +58,6 @@ export default function Home() {
         <div id="tool-interface">
           <ToolInterface toolType={selectedTool} onClose={handleToolClose} />
         </div>
-
-        {/* Features */}
-        <Features />
       </main>
       
       <Footer />
