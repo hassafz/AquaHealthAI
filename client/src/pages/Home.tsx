@@ -26,22 +26,11 @@ export default function Home() {
       <NavBar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.h2 
-          id="tools"
-          className="text-3xl font-bold text-gray-800 dark:text-white text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          Our Analysis Tools
-        </motion.h2>
-
         {/* Tool Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           <ToolCard
             type="algae"
-            title="Algae Identifier"
+            title="Algae Analyzer"
             description="Upload a photo of your tank to identify algae issues and get a customized treatment plan."
             onSelect={handleToolSelect}
           />

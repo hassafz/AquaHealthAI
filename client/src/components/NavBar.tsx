@@ -42,7 +42,7 @@ export function NavBar() {
                   <path d="M2 12h20M2 12c3.6-3.6 7.4-3.6 11 0 3.6 3.6 7.4 3.6 11 0M2 12c3.6 3.6 7.4 3.6 11 0 3.6-3.6 7.4-3.6 11 0" />
                 </svg>
                 <span className="font-bold text-xl text-primary dark:text-primary-light">
-                  AquaScape Analyzer
+                  Aquarium Analyser
                 </span>
               </a>
             </Link>
