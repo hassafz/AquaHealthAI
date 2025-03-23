@@ -2,6 +2,7 @@ import express, { type Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { analyzeAlgaeImage, analyzeFishHealthImage } from "./openai";
+import { generateAquascapeImage, generateFishImage } from "./images";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
@@ -30,8 +31,51 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Create public directory for serving generated images
+  const publicDir = path.join(process.cwd(), 'public');
+  const imagesDir = path.join(publicDir, 'images');
+  
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir);
+  }
+  
+  if (!fs.existsSync(imagesDir)) {
+    fs.mkdirSync(imagesDir);
+  }
+
+  // Serve static files from public directory
+  app.use('/images', express.static(path.join(process.cwd(), 'public', 'images')));
+
   // Add API routes
   const router = express.Router();
+  
+  // Generate aquascape image route
+  router.get('/generate-aquascape-image', async (_req: Request, res: Response) => {
+    try {
+      const imagePath = await generateAquascapeImage();
+      res.json({ success: true, path: imagePath });
+    } catch (error) {
+      console.error('Error generating aquascape image:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      });
+    }
+  });
+
+  // Generate fish image route
+  router.get('/generate-fish-image', async (_req: Request, res: Response) => {
+    try {
+      const imagePath = await generateFishImage();
+      res.json({ success: true, path: imagePath });
+    } catch (error) {
+      console.error('Error generating fish image:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      });
+    }
+  });
 
   // Analyze algae image
   router.post('/analyze-algae', upload.single('image'), async (req: Request, res: Response) => {
