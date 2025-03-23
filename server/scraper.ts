@@ -17,8 +17,8 @@ export async function scrapeArticle(url: string): Promise<string> {
     // Load HTML into cheerio
     const $ = cheerio.load(html);
     
-    // Get the article content
-    const articleContent = $('.article__content');
+    // Get the article content - the website has been updated, so let's use a more general selector
+    const articleContent = $('.rte');
     
     // Extract title
     const title = $('.article__title').text().trim();

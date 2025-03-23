@@ -64,7 +64,7 @@ export default function BlackBeardAlgae() {
             </button>
           </div>
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <div className="article-content" dangerouslySetInnerHTML={{ __html: content }} />
         )}
       </main>
 
