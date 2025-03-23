@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { analyzeAlgaeImage, analyzeFishHealthImage } from "./openai";
 import { generateAquascapeImage, generateFishImage } from "./images";
+import { scrapeArticle } from "./scraper";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
@@ -165,6 +166,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ 
         message: 'Error analyzing image',
         error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
+
+  // Get content for Black Beard Algae article
+  router.get('/black-beard-algae-article', async (_req: Request, res: Response) => {
+    try {
+      // URL of the original article
+      const url = "https://www.2hraquarist.com/blogs/algae-control/how-to-control-bba";
+      
+      // Scrape and optimize the article content
+      const content = await scrapeArticle(url);
+      
+      res.json({ 
+        success: true, 
+        content 
+      });
+    } catch (error) {
+      console.error('Error fetching Black Beard Algae article:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
       });
     }
   });

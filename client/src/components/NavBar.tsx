@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -9,9 +9,26 @@ import { motion } from "framer-motion";
 export function NavBar() {
   const { theme, toggleTheme } = useDarkMode();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAlgaeMenuOpen, setIsAlgaeMenuOpen] = useState(false);
+  const algaeMenuRef = useRef<HTMLDivElement>(null);
+
+  // Handle clicking outside of the algae menu to close it
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (algaeMenuRef.current && !algaeMenuRef.current.contains(event.target as Node)) {
+        setIsAlgaeMenuOpen(false);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const navItems = [
     { name: "Home", path: "/" },
+    // Algae menu is handled separately
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
