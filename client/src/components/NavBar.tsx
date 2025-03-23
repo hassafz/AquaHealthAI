@@ -45,7 +45,7 @@ export function NavBar() {
           {/* Logo and brand */}
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center">
+              <div className="flex items-center cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -61,7 +61,7 @@ export function NavBar() {
                 <span className="font-bold text-xl text-primary dark:text-primary-light">
                   Aquarium Analyser
                 </span>
-              </a>
+              </div>
             </Link>
           </div>
 
@@ -69,11 +69,46 @@ export function NavBar() {
           <div className="hidden md:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link key={item.name} href={item.path}>
-                <a className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary-light transition-colors duration-200">
+                <div className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary-light transition-colors duration-200">
                   {item.name}
-                </a>
+                </div>
               </Link>
             ))}
+            
+            {/* Algae Menu Dropdown */}
+            <div className="relative" ref={algaeMenuRef}>
+              <button 
+                onClick={() => setIsAlgaeMenuOpen(!isAlgaeMenuOpen)}
+                className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary-light transition-colors duration-200"
+              >
+                <span>Algae</span>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className={`ml-1 h-4 w-4 transition-transform duration-200 ${isAlgaeMenuOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isAlgaeMenuOpen && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10"
+                >
+                  <Link href="/algae/black-beard-algae">
+                    <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                      Black Beard Algae
+                    </div>
+                  </Link>
+                </motion.div>
+              )}
+            </div>
 
             {/* Dark mode toggle */}
             <div className="flex items-center space-x-2">
@@ -178,14 +213,27 @@ export function NavBar() {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <Link key={item.name} href={item.path}>
-                <a
+                <div
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary-light"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
-                </a>
+                </div>
               </Link>
             ))}
+            
+            {/* Algae menu items for mobile */}
+            <div className="block px-3 py-2">
+              <div className="text-base font-medium text-gray-700 dark:text-gray-300">Algae</div>
+              <Link href="/algae/black-beard-algae">
+                <div 
+                  className="block pl-4 py-2 text-sm text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary-light"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Black Beard Algae
+                </div>
+              </Link>
+            </div>
             
             {/* Dark mode toggle for mobile */}
             <div className="flex items-center justify-between px-3 py-2">
