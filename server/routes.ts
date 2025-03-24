@@ -192,6 +192,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get content for Hair/Filamentous Algae article
+  router.get('/hair-algae-article', async (_req: Request, res: Response) => {
+    try {
+      // URL of the original article
+      const url = "https://www.2hraquarist.com/blogs/algae-control/how-to-control-hair-algae";
+      
+      // Scrape and optimize the article content
+      const content = await scrapeArticle(url);
+      
+      res.json({ 
+        success: true, 
+        content 
+      });
+    } catch (error) {
+      console.error('Error fetching Hair Algae article:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      });
+    }
+  });
+
   // Register the router
   app.use('/api', router);
 
