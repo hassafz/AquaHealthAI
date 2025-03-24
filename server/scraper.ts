@@ -191,13 +191,15 @@ export async function scrapeArticle(url: string): Promise<string> {
     
     // Add a container with proper styling
     const optimizedContent = `
-      <div class="max-w-4xl mx-auto px-4 py-8">
-        <h1 class="text-3xl md:text-4xl font-bold mb-6">How to Control Black Beard Algae (BBA) in Planted Aquariums</h1>
-        <div class="prose prose-lg dark:prose-invert max-w-none">
+      <article>
+        <header>
+          <h1>How to Control Black Beard Algae (BBA) in Planted Aquariums</h1>
+        </header>
+        <div class="rte">
           ${contentHtml}
         </div>
         ${schemaMarkup}
-      </div>
+      </article>
     `;
     
     // Download images
