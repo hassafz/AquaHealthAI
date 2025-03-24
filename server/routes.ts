@@ -31,6 +31,9 @@ const upload = multer({
   }
 });
 
+// Store cached content for the Black Beard Algae article
+let cachedBBAContent: string | null = null;
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create public directory for serving generated images
   const publicDir = path.join(process.cwd(), 'public');
@@ -173,15 +176,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get content for Black Beard Algae article
   router.get('/black-beard-algae-article', async (_req: Request, res: Response) => {
     try {
+      // If we have cached content, return it immediately
+      if (cachedBBAContent) {
+        console.log('[Routes] Serving cached BBA article content');
+        return res.json({ 
+          success: true, 
+          content: cachedBBAContent,
+          source: 'cache'
+        });
+      }
+      
+      console.log('[Routes] First-time fetching and caching BBA article content');
+      
       // URL of the original article
       const url = "https://www.2hraquarist.com/blogs/algae-control/how-to-control-bba";
       
       // Scrape and optimize the article content
       const content = await scrapeArticle(url);
       
+      // Store the content in our cache for future requests
+      cachedBBAContent = content;
+      
       res.json({ 
         success: true, 
-        content 
+        content,
+        source: 'fresh'
       });
     } catch (error) {
       console.error('Error fetching Black Beard Algae article:', error);
