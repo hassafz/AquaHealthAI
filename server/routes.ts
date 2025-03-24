@@ -275,7 +275,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('[Routes] First-time fetching and caching Green Water Algae article content');
       
       // URL of the original article
-      const url = "https://www.2hraquarist.com/blogs/algae-control/how-to-control-green-water";
+      const url = "https://www.2hraquarist.com/blogs/algae-control/control-green-water-algae";
       
       // Parameters for the article
       const algaeType = 'Green Water Algae';
