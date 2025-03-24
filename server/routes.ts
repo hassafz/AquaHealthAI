@@ -192,8 +192,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // URL of the original article
       const url = "https://www.2hraquarist.com/blogs/algae-control/how-to-control-bba";
       
+      // Parameters for the article
+      const algaeType = 'Black Beard Algae';
+      const algaeShortName = 'BBA';
+      
       // Scrape and optimize the article content
-      const content = await scrapeArticle(url);
+      const content = await scrapeArticle(url, algaeType, algaeShortName);
       
       // Store the content in our cache for future requests
       cachedBBAContent = content;
