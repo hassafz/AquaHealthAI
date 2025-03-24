@@ -7,17 +7,12 @@ import { rewriteContentForSEO } from './openai';
 /**
  * Scrapes and processes content from the 2hraquarist website
  * @param url URL to scrape
+ * @param algaeType Full name of the algae type (e.g., 'Black Beard Algae')
+ * @param algaeShortName Abbreviation of the algae type (e.g., 'BBA')
  * @returns Processed HTML content optimized for SEO
  */
-export async function scrapeArticle(url: string): Promise<string> {
-  // Determine algae type based on URL
-  let algaeType = 'Black Beard Algae';
-  let algaeShortName = 'BBA';
-  
-  if (url.includes('how-to-control-misc-green-algae')) {
-    algaeType = 'Hair/Filamentous Algae';
-    algaeShortName = 'Hair Algae';
-  }
+export async function scrapeArticle(url: string, algaeType: string = 'Black Beard Algae', algaeShortName: string = 'BBA'): Promise<string> {
+  // Function now receives algae type and short name as parameters, making it reusable
   try {
     // Fetch the HTML content
     const response = await axios.get(url);

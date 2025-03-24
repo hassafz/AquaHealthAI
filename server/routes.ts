@@ -234,8 +234,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // URL of the original article
       const url = "https://www.2hraquarist.com/blogs/algae-control/how-to-control-misc-green-algae";
       
+      // Parameters for the article
+      const algaeType = 'Hair/Filamentous Algae';
+      const algaeShortName = 'Hair Algae';
+      
       // Scrape and optimize the article content
-      const content = await scrapeArticle(url);
+      const content = await scrapeArticle(url, algaeType, algaeShortName);
       
       // Store the content in our cache for future requests
       cachedHairAlgaeContent = content;
