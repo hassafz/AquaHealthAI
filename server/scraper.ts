@@ -190,8 +190,8 @@ export async function scrapeArticle(url: string): Promise<string> {
       </ul>
     `;
     
-    // Add a container with proper styling
-    const optimizedContent = `
+    // Create initial HTML structure
+    let optimizedContent = `
       <article>
         <header>
           <h1>How to Control Black Beard Algae (BBA) in Planted Aquariums</h1>
@@ -206,6 +206,16 @@ export async function scrapeArticle(url: string): Promise<string> {
     // Download images
     for (const image of images) {
       await downloadImage(image.originalSrc, image.localPath);
+    }
+    
+    // Use OpenAI to rewrite the content for SEO while preserving HTML structure
+    console.log("[Scraper] Rewriting content for SEO optimization...");
+    try {
+      optimizedContent = await rewriteContentForSEO(optimizedContent);
+      console.log("[Scraper] Content successfully rewritten");
+    } catch (error) {
+      console.error("[Scraper] Error rewriting content:", error);
+      // Continue with original content if rewriting fails
     }
     
     return optimizedContent;
