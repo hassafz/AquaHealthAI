@@ -31,8 +31,9 @@ const upload = multer({
   }
 });
 
-// Store cached content for the Black Beard Algae article
+// Store cached content for articles
 let cachedBBAContent: string | null = null;
+let cachedHairAlgaeContent: string | null = null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create public directory for serving generated images
@@ -204,6 +205,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error('Error fetching Black Beard Algae article:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      });
+    }
+  });
+
+  // Get content for Hair/Filamentous Algae article
+  router.get('/hair-algae-article', async (_req: Request, res: Response) => {
+    try {
+      // If we have cached content, return it immediately
+      if (cachedHairAlgaeContent) {
+        console.log('[Routes] Serving cached Hair Algae article content');
+        return res.json({ 
+          success: true, 
+          content: cachedHairAlgaeContent,
+          source: 'cache'
+        });
+      }
+      
+      console.log('[Routes] First-time fetching and caching Hair Algae article content');
+      
+      // URL of the original article
+      const url = "https://www.2hraquarist.com/blogs/algae-control/how-to-control-misc-green-algae";
+      
+      // Scrape and optimize the article content
+      const content = await scrapeArticle(url);
+      
+      // Store the content in our cache for future requests
+      cachedHairAlgaeContent = content;
+      
+      res.json({ 
+        success: true, 
+        content,
+        source: 'fresh'
+      });
+    } catch (error) {
+      console.error('Error fetching Hair Algae article:', error);
       res.status(500).json({ 
         success: false, 
         error: error instanceof Error ? error.message : 'Unknown error' 
