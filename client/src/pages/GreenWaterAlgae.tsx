@@ -1,28 +1,30 @@
-import { useEffect, useState } from 'react';
-import { apiRequest } from '../lib/queryClient';
+import { useEffect, useState } from "react";
+import { NavBar } from "@/components/NavBar";
+import { Footer } from "@/components/Footer";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function GreenWaterAlgae() {
-  const [content, setContent] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [content, setContent] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchArticleContent() {
       try {
-        setLoading(true);
-        const response = await fetch('/api/green-water-algae-article');
+        setIsLoading(true);
+        const response = await fetch("/api/green-water-algae-article");
         const data = await response.json();
 
         if (data.success && data.content) {
           setContent(data.content);
         } else {
-          setError(data.error || 'Failed to load article content');
+          setError(data.error || "Failed to load article content");
         }
-      } catch (err) {
-        console.error('Error fetching article:', err);
-        setError('An error occurred while loading the article');
+      } catch (error) {
+        setError("An error occurred while fetching the article");
+        console.error("Error fetching article:", error);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
 
@@ -30,55 +32,43 @@ export default function GreenWaterAlgae() {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
-      <div className="mb-6">
-        <a 
-          href="/" 
-          className="text-blue-600 hover:text-blue-800 flex items-center"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-5 w-5 mr-1" 
-            viewBox="0 0 20 20" 
-            fill="currentColor"
-          >
-            <path 
-              fillRule="evenodd" 
-              d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" 
-              clipRule="evenodd" 
-            />
-          </svg>
-          Back to Home
-        </a>
-      </div>
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
+      <NavBar />
+      
+      <main className="flex-grow">
+        {isLoading ? (
+          <div className="max-w-4xl mx-auto px-4 py-8">
+            <Skeleton className="h-12 w-3/4 mb-6" />
+            <Skeleton className="h-6 w-full mb-3" />
+            <Skeleton className="h-6 w-5/6 mb-3" />
+            <Skeleton className="h-6 w-full mb-3" />
+            <Skeleton className="h-48 w-full mb-6" />
+            <Skeleton className="h-6 w-full mb-3" />
+            <Skeleton className="h-6 w-5/6 mb-3" />
+            <Skeleton className="h-6 w-full mb-6" />
+            <Skeleton className="h-8 w-1/2 mb-4" />
+            <Skeleton className="h-6 w-full mb-3" />
+            <Skeleton className="h-6 w-5/6 mb-3" />
+          </div>
+        ) : error ? (
+          <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+            <h1 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-4">
+              Error Loading Article
+            </h1>
+            <p className="mb-6">{error}</p>
+            <button 
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        ) : (
+          <div className="article-content" dangerouslySetInnerHTML={{ __html: content }} />
+        )}
+      </main>
 
-      {loading ? (
-        <div className="animate-pulse space-y-4">
-          <div className="h-12 bg-gray-200 rounded w-3/4"></div>
-          <div className="h-6 bg-gray-200 rounded w-1/2"></div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-200 rounded"></div>
-            <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-            <div className="h-4 bg-gray-200 rounded w-4/6"></div>
-          </div>
-          <div className="h-64 bg-gray-200 rounded"></div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-200 rounded"></div>
-            <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-            <div className="h-4 bg-gray-200 rounded w-4/6"></div>
-          </div>
-        </div>
-      ) : error ? (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-md text-red-700">
-          <h2 className="text-lg font-semibold mb-2">Error</h2>
-          <p>{error}</p>
-        </div>
-      ) : (
-        <div 
-          className="prose prose-lg max-w-none dark:prose-invert prose-img:rounded-xl prose-headings:font-bold prose-a:text-blue-600"
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
-      )}
+      <Footer />
     </div>
   );
 }

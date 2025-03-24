@@ -111,6 +111,11 @@ export function NavBar() {
                       Hair/Filamentous Algae
                     </div>
                   </Link>
+                  <Link href="/algae/green-water-algae">
+                    <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                      Green Water Algae
+                    </div>
+                  </Link>
                 </motion.div>
               )}
             </div>
@@ -244,6 +249,14 @@ export function NavBar() {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Hair/Filamentous Algae
+                </div>
+              </Link>
+              <Link href="/algae/green-water-algae">
+                <div 
+                  className="block pl-4 py-2 text-sm text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary-light"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Green Water Algae
                 </div>
               </Link>
             </div>
