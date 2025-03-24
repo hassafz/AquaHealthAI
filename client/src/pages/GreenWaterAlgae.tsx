@@ -64,7 +64,9 @@ export default function GreenWaterAlgae() {
             </button>
           </div>
         ) : (
-          <div className="article-content" dangerouslySetInnerHTML={{ __html: content }} />
+          <div className="max-w-4xl mx-auto px-4 py-8">
+            <div className="article-content prose prose-lg dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
         )}
       </main>
 
