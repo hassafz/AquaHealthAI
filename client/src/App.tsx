@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import BlackBeardAlgae from "@/pages/BlackBeardAlgae";
+import HairAlgae from "@/pages/HairAlgae";
 import { useEffect } from "react";
 import { useDarkMode } from "./hooks/use-dark-mode";
 
@@ -13,6 +14,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/algae/black-beard-algae" component={BlackBeardAlgae} />
+      <Route path="/algae/hair-algae" component={HairAlgae} />
       <Route component={NotFound} />
     </Switch>
   );
