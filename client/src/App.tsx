@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import BlackBeardAlgae from "@/pages/BlackBeardAlgae";
 import HairAlgae from "@/pages/HairAlgae";
+import GreenWaterAlgae from "@/pages/GreenWaterAlgae";
 import { useEffect } from "react";
 import { useDarkMode } from "./hooks/use-dark-mode";
 
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/algae/black-beard-algae" component={BlackBeardAlgae} />
       <Route path="/algae/hair-filamentous-algae" component={HairAlgae} />
+      <Route path="/algae/green-water-algae" component={GreenWaterAlgae} />
       <Route component={NotFound} />
     </Switch>
   );
