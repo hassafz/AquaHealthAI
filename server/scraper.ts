@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
+import { rewriteContentForSEO } from './openai';
 
 /**
  * Scrapes and processes content from the 2hraquarist website
